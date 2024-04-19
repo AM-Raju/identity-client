@@ -8,9 +8,9 @@ const DBPage = () => {
             Identity
           </h1>
           <div className="w-64 flex justify-between">
-            <span>-------------</span>
+            <span>----------</span>
             <h3>Dashboard</h3>
-            <span>-------------</span>
+            <span>----------</span>
           </div>
         </div>
       </div>

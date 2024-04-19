@@ -10,7 +10,7 @@ const LoginPage = () => {
     console.log("From login", data);
   };
   return (
-    <div className="bg-zinc-800 w-full min-h-screen lg:h-[calc(100vh-64px)] flex items-center justify-center">
+    <div className="bg-slate-800 w-full min-h-screen  flex items-center justify-center">
       {/* Login form */}
       <div className="w-[90%] lg:w-[40%]  flex items-center justify-center relative border-t-2 border-b-2 border-white">
         {/* <div className="w-full h-1 bg-pink-500 absolute top-0"></div> */}

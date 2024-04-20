@@ -1,7 +1,24 @@
-import React from "react";
+import CheckoutItems from "@/components/checkout/CheckoutItems";
+import OrderSummary from "@/components/checkout/OrderSummary";
+import PaymentMethodCard from "@/components/checkout/PaymentMethodCard";
+import ShippingAddress from "@/components/checkout/ShippingAddress";
+import Container from "@/components/shared/Container";
 
 const CheckoutPage = () => {
-  return <div>This is checkout page</div>;
+  return (
+    <Container>
+      <div className="pt-32 pb-40 space-y-10">
+        <div className="grid grid-cols-2 gap-16">
+          <CheckoutItems></CheckoutItems>
+          <OrderSummary></OrderSummary>
+        </div>
+        <div className="grid grid-cols-2 gap-16">
+          <ShippingAddress></ShippingAddress>
+          <PaymentMethodCard></PaymentMethodCard>
+        </div>
+      </div>
+    </Container>
+  );
 };
 
 export default CheckoutPage;

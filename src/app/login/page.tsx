@@ -1,13 +1,34 @@
 "use client";
 
+import { useLoginUserMutation } from "@/redux/api/authApi";
+import { storeUserInfo } from "@/services/auth.service";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const LoginPage = () => {
   const { register, handleSubmit, reset } = useForm<FieldValues>();
+  const [loginUser] = useLoginUserMutation();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log("From login", data);
+    // console.log("From login", data);
+    try {
+      const res = await loginUser(data).unwrap();
+      // console.log("login page", res);
+      // console.log(res?.accessToken);
+
+      if (res?.success) {
+        toast.success(res?.message);
+        storeUserInfo({ accessToken: res?.accessToken });
+        reset();
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="bg-slate-800 w-full min-h-screen  flex items-center justify-center">

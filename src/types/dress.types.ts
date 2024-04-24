@@ -1,10 +1,10 @@
-type TImage = {
+export type TImage = {
   front: string;
   var1: string;
   var2: string;
 };
 
-type TDescription = {
+export type TDescription = {
   paragraph: string;
   list: string[];
 };

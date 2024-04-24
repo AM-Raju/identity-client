@@ -1,10 +1,15 @@
 import Container from "../shared/Container";
 import Link from "next/link";
-import FlashSaleCard from "../cards/FlashSaleCard";
+
 import { TDress } from "@/types/dress.types";
 import Timer from "../shared/Timer";
+import dynamic from "next/dynamic";
 
 const FlashSale = async () => {
+  const FlashSaleCard = dynamic(
+    () => import("@/components/cards/FlashSaleCard"),
+    { ssr: false }
+  );
   const res = await fetch(`${process.env.BACKEND_URL}/flash-products`, {
     next: {
       revalidate: 30,

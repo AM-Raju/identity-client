@@ -1,22 +1,26 @@
 "use client";
 import { authKey } from "@/constant/constant";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { getUserInfo, isLoggedIn, removeUser } from "@/services/auth.service";
 import { removeFromLocalStorage } from "@/utils/localStorage";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaRegUser } from "react-icons/fa";
 
 const NavProfile = () => {
+  const cart = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+
   const router = useRouter();
   const pathName = usePathname();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     setUser(getUserInfo());
-  }, []);
+  }, [cart, dispatch]);
 
   const handleLogout = () => {
     removeUser();
@@ -29,9 +33,12 @@ const NavProfile = () => {
       <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
           <div className="indicator">
-            <AiOutlineShoppingCart className="text-white size-7" />
+            <AiOutlineShoppingCart className="text-secondary size-7" />
 
-            <p className="badge badge-sm indicator-item">8</p>
+            <div className="bg-white flex items-center justify-center h-5 min-w-5  rounded-full  relative -left-2 -top-2 p-1">
+              <p className="px-0.5 text-xs">{cart?.cartTotalQuantity}</p>
+            </div>
+            {/* <p className="badge badge-sm indicator-item">8</p> */}
           </div>
         </div>
         <div
@@ -39,11 +46,17 @@ const NavProfile = () => {
           className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
         >
           <div className="card-body">
-            <span className="font-bold text-lg">8 Items</span>
-            <span className="text-info">Subtotal: $999</span>
-            <div className="card-actions">
-              <button className="btn btn-primary btn-block">View cart</button>
-            </div>
+            <span className="font-bold text-lg">
+              {cart?.cartTotalQuantity} Items
+            </span>
+            <span className="text-info">
+              Subtotal: ${cart?.cartTotalAmount}
+            </span>
+            <Link href="/checkout">
+              <div className="w-full py-3 rounded-lg border border-secondary bg-secondary hover:bg-amber-500 transition-all duration-300 flex justify-center">
+                <button>View cart</button>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

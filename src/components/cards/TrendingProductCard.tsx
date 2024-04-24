@@ -1,13 +1,25 @@
+"use client";
 import { TDress } from "@/types/dress.types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { GoPlusCircle } from "react-icons/go";
+import { addToCart, getTotals } from "@/redux/slices/cartSlice";
+import { MdAddShoppingCart } from "react-icons/md";
+import { useAppDispatch } from "@/redux/hook";
 
 const TrendingProductCard = ({ product }: { product: TDress }) => {
+  const dispatch = useAppDispatch();
   const { _id, title, image, price, discount, ratings } = product;
 
   const updatedPrice = (price - (discount * price) / 100).toFixed(2);
+
+  const handleCart = (product: TDress) => {
+    const { _id, image, title, price } = product;
+    const cartItem = { _id, img: image.front, title, price, qty: 1 };
+    // console.log(cartItem);
+    dispatch(addToCart(cartItem));
+    dispatch(getTotals());
+  };
   return (
     <div className="w-72 h-[432px] border-2 border-secondary rounded-xl relative group">
       <p className="px-3 py-1 absolute bg-secondary text-primary rounded-xl text-sm top-3 left-3 z-10">
@@ -51,7 +63,9 @@ const TrendingProductCard = ({ product }: { product: TDress }) => {
             ${updatedPrice}{" "}
             <span className="line-through ml-3 text-primary">${price}</span>
           </p>
-          <GoPlusCircle className="text-2xl" />
+          <button onClick={() => handleCart(product)}>
+            <MdAddShoppingCart className="text-2xl text-secondary" />
+          </button>
         </div>
       </div>
     </div>

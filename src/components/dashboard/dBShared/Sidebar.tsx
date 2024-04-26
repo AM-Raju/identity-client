@@ -50,6 +50,15 @@ const Sidebar = () => {
                 <PiDressBold className={`shrink-0 size-6`} />
                 <span className="truncate hidden md:block">Add Dress</span>
               </Link>
+              <Link
+                className={`${
+                  pathName === "/dashboard/orders" ? "bg-secondary" : ""
+                } w-full px-3 py-2  hover:bg-secondary transition-all duration-300 flex gap-3 items-center justify-center lg:justify-start truncate bg-gray-200`}
+                href="/dashboard/orders"
+              >
+                <PiDressBold className={`shrink-0 size-6`} />
+                <span className="truncate hidden md:block">Manage Orders</span>
+              </Link>
             </>
           )}
 

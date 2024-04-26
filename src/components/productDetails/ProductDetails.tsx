@@ -1,12 +1,14 @@
 "use client";
 import Container from "@/components/shared/Container";
 import { TDress } from "@/types/dress.types";
-import { useState } from "react";
+import {  useState } from "react";
 import ProductDetailsImageBlock from "./ProductDetailsImageBlock";
 import ProductDetailsTitleTextBlock from "./ProductDetailsTitleTextBlock";
 
+
 const ProductDetails = ({ product }: { product: TDress }) => {
-  const { title, image, price, description, ratings } = product;
+ 
+  const { image, description } = product;
 
   const [enlargedImage, setEnlargedImage] = useState(image.front);
 
@@ -22,9 +24,7 @@ const ProductDetails = ({ product }: { product: TDress }) => {
           ></ProductDetailsImageBlock>
           {/* Title text block */}
           <ProductDetailsTitleTextBlock
-            title={title}
-            price={price}
-            description={description}
+            product={product}
           ></ProductDetailsTitleTextBlock>
         </div>
       </Container>

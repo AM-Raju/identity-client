@@ -1,9 +1,10 @@
-import CheckoutItems from "@/components/checkout/CheckoutItems";
-import OrderSummary from "@/components/checkout/OrderSummary";
+"use client";
 import PaymentMethodCard from "@/components/checkout/PaymentMethodCard";
 import ShippingAddress from "@/components/checkout/ShippingAddress";
 import Container from "@/components/shared/Container";
+import { getUserDetails } from "@/services/auth.service";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 const CheckoutPage = () => {
   const CheckoutItems = dynamic(

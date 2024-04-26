@@ -1,19 +1,59 @@
 "use client";
+import { useCreateOrderMutation } from "@/redux/api/orderApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { clearCart, getTotals } from "@/redux/slices/cartSlice";
+import { addOrder, setAddress } from "@/redux/slices/oderSlice";
+import { RootState } from "@/redux/store";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { toast } from "sonner";
 
 const OrderSummary = () => {
   const dispatch = useAppDispatch();
-  const cart = useAppSelector((state) => state.cart);
+  const cart = useAppSelector((state: RootState) => state.cart);
+  const { user } = useAppSelector((state: RootState) => state.user);
+  const { order } = useAppSelector((state: RootState) => state.order);
+  const [createOrder] = useCreateOrderMutation();
+
   const shippingCharge = 50;
   const beforeTax = 20.75;
   const tax = (cart?.cartTotalAmount * 5) / 100;
   const orderTotal = cart?.cartTotalAmount + shippingCharge + beforeTax + tax;
 
+  const orderDetails = {
+    orderedBy: user?.email,
+    orderInfo: { orderItems: cart?.cartItems, count: cart?.cartTotalQuantity },
+    payableAmount: orderTotal,
+    paymentMethod: "Cash on Delivery",
+    status: "Pending",
+  };
+
   const handleClearCart = () => {
     dispatch(clearCart());
     dispatch(getTotals());
+  };
+
+  const setAddressToState = () => {
+    if (user?.address) {
+      dispatch(setAddress(user?.address));
+    }
+  };
+
+  const handleOrder = async () => {
+    if (!order?.address && !user?.address) {
+      toast.error("Save Address first");
+    } else {
+      setAddressToState();
+      dispatch(addOrder(orderDetails));
+      if (order?.orderedBy) {
+        const res: any = await createOrder(order);
+        if (res?.data?.insertedId) {
+          dispatch(clearCart());
+          dispatch(getTotals());
+          toast.success("Order added successfully!");
+        }
+      }
+    }
   };
 
   return (
@@ -54,7 +94,15 @@ const OrderSummary = () => {
         >
           Clear Cart
         </button>
-        <button className="px-6 py-3 rounded-full border-2 border-secondary hover:bg-secondary transition-all duration-300 text-secondary hover:text-primary col-span-2">
+        <button
+          onClick={handleOrder}
+          className={`px-6 py-3 rounded-full border-2   transition-all duration-300 col-span-2   ${
+            cart?.cartItems.length > 0
+              ? "hover:bg-secondary border-secondary hover:text-primary text-secondary  "
+              : "bg-gray-300 border-gray-300 text-black"
+          } `}
+          disabled={cart?.cartItems.length > 0 ? false : true}
+        >
           Proceed to Checkout
         </button>
       </div>

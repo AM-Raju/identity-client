@@ -17,15 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
-      <html lang="en">
-        <body className={inter.className}>
-          <>
-            <Toaster position="top-center" />
-            {children}
-          </>
-        </body>
-      </html>
-    </Providers>
+    <html lang="en">
+      <body className={inter.className}>
+        <Providers>
+          <Toaster position="top-center" />
+          {children}
+        </Providers>
+      </body>
+    </html>
   );
 }

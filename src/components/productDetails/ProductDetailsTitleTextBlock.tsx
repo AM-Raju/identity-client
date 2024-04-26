@@ -1,20 +1,42 @@
-import { TDescription } from "@/types/dress.types";
-import React from "react";
+"use client";
+import { useAppDispatch } from "@/redux/hook";
+import { addToCart, getTotals } from "@/redux/slices/cartSlice";
+import { TDress } from "@/types/dress.types";
+import React, { useState } from "react";
 import { FaStar, FaStarHalf } from "react-icons/fa";
 import { HiOutlineArrowPathRoundedSquare } from "react-icons/hi2";
 import { LiaShippingFastSolid } from "react-icons/lia";
 
 type TProductDetailsTitleTextProps = {
-  title: string;
-  price: number;
-  description: TDescription;
+  product: TDress;
 };
 
 const ProductDetailsTitleTextBlock = ({
-  title,
-  price,
-  description,
+  product,
 }: TProductDetailsTitleTextProps) => {
+  const dispatch = useAppDispatch();
+  const [count, setCount] = useState(1);
+
+  const { title, image, price, description } = product;
+
+  const increaseCount = () => {
+    setCount(count + 1);
+  };
+
+  const decreaseCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
+  const handleCart = (product: TDress) => {
+    const { _id, image, title, price } = product;
+    const cartItem = { _id, img: image.front, title, price, qty: count };
+    // console.log(cartItem);
+    dispatch(addToCart(cartItem));
+    dispatch(getTotals());
+  };
+
   return (
     <div className=" xl:w-[510px] ">
       <div className="mt-3 mb-4">
@@ -45,11 +67,18 @@ const ProductDetailsTitleTextBlock = ({
             <div>
               <div className="grid grid-cols-3 gap-4">
                 <div className="flex justify-around items-center border border-gray-300  rounded-full">
-                  <button className="text-2xl">-</button>
-                  <p>5</p>
-                  <button className="text-xl">+</button>
+                  <button onClick={decreaseCount} className="text-2xl">
+                    -
+                  </button>
+                  <p>{count}</p>
+                  <button onClick={increaseCount} className="text-xl">
+                    +
+                  </button>
                 </div>
-                <button className="col-span-2  py-3 rounded-full flex items-center justify-center bg-secondary hover:bg-amber-500 transition-all duration-300">
+                <button
+                  onClick={() => handleCart(product)}
+                  className="col-span-2  py-3 rounded-full flex items-center justify-center bg-secondary hover:bg-amber-500 transition-all duration-300"
+                >
                   <p>add to cart</p>
                 </button>
               </div>

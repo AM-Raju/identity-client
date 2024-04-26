@@ -1,15 +1,17 @@
 "use client";
-
 import { useLoginUserMutation } from "@/redux/api/authApi";
-import { storeUserInfo } from "@/services/auth.service";
-
+import { useAppDispatch } from "@/redux/hook";
+import { setUser } from "@/redux/slices/userSlice";
+import { getUserDetails, storeUserInfo } from "@/services/auth.service";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const LoginPage = () => {
+  const dispatch = useAppDispatch();
   const { register, handleSubmit, reset } = useForm<FieldValues>();
+
   const [loginUser] = useLoginUserMutation();
   const router = useRouter();
 
@@ -23,6 +25,10 @@ const LoginPage = () => {
       if (res?.success) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.accessToken });
+
+        const user = await getUserDetails();
+        console.log(user);
+        dispatch(setUser(user));
         reset();
         router.push("/dashboard");
       }

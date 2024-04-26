@@ -1,4 +1,5 @@
 import { authKey } from "@/constant/constant";
+import { useGetUserQuery } from "@/redux/api/authApi";
 import { decodedToken } from "@/utils/jwt";
 import {
   getFromLocalStorage,
@@ -32,4 +33,18 @@ export const isLoggedIn = () => {
 
 export const removeUser = () => {
   return removeFromLocalStorage(authKey);
+};
+
+export const getUserDetails = async () => {
+  const { email } = getUserInfo();
+  const res = await fetch(`http://localhost:5000/api/v1/users/${email}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const userDetails = await res.json();
+
+  return userDetails;
 };

@@ -1,4 +1,3 @@
-import React from "react";
 import { IoConstructOutline } from "react-icons/io5";
 
 const UnderConstruction = ({ page }: { page: string }) => {

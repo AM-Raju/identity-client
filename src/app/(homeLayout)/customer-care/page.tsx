@@ -1,8 +1,6 @@
 import Container from "@/components/shared/Container";
 import UnderConstruction from "@/components/shared/UnderConstruction";
 import { Metadata } from "next";
-import React from "react";
-
 export const metadata: Metadata = {
   title: "Customer Support | Identity",
   description: "Be the real you",

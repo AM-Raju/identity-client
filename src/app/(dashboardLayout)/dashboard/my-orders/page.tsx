@@ -9,7 +9,6 @@ import { TOrder } from "@/types/order.types";
 const MyOrderPage = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
   const { data: myOrders, isLoading } = useMyOrdersQuery(user?.email);
-  console.log(myOrders);
 
   if (isLoading) {
     return <Loading></Loading>;

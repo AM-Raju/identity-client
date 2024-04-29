@@ -1,6 +1,5 @@
 import Container from "@/components/shared/Container";
 import UnderConstruction from "@/components/shared/UnderConstruction";
-import React from "react";
 
 const TrendingProductPage = () => {
   const page = "Trending Products";

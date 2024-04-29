@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { clearCart, getTotals } from "@/redux/slices/cartSlice";
 import { addOrder, clearOrder, setAddress } from "@/redux/slices/oderSlice";
 import { RootState } from "@/redux/store";
+import Link from "next/link";
 import React, { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -13,6 +14,7 @@ const OrderSummary = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
   const { order } = useAppSelector((state: RootState) => state.order);
   const [createOrder] = useCreateOrderMutation();
+  console.log(user);
 
   const shippingCharge = 50;
   const beforeTax = 20.75;
@@ -93,17 +95,29 @@ const OrderSummary = () => {
         >
           Clear Cart
         </button>
-        <button
-          onClick={handleOrder}
-          className={`px-6 py-3 rounded-full border-2   transition-all duration-300 col-span-2   ${
-            cart?.cartItems.length > 0
-              ? "hover:bg-secondary border-secondary hover:text-primary text-secondary  "
-              : "bg-gray-300 border-gray-300 text-black"
-          } `}
-          disabled={cart?.cartItems.length > 0 ? false : true}
-        >
-          Proceed to Checkout
-        </button>
+        <div className="w-full col-span-2">
+          {!user?.email ? (
+            <Link href="/login">
+              <button
+                className={`px-6 py-3 rounded-full border-2   transition-all duration-300  hover:bg-secondary border-secondary hover:text-primary text-secondary w-full  `}
+              >
+                Login to Checkout
+              </button>
+            </Link>
+          ) : (
+            <button
+              onClick={handleOrder}
+              className={`px-6 py-3 rounded-full border-2   transition-all duration-300 w-full  ${
+                cart?.cartItems.length > 0
+                  ? "hover:bg-secondary border-secondary hover:text-primary text-secondary  "
+                  : "bg-gray-300 border-gray-300 text-black"
+              } `}
+              disabled={cart?.cartItems.length > 0 ? false : true}
+            >
+              Proceed to Checkout
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const SliderCard = ({ product }: { product: TDress }) => {
   const handleCart = (product: TDress) => {
     const { _id, image, title, price } = product;
     const cartItem = { _id, img: image.front, title, price, qty: 1 };
-    // console.log(cartItem);
+
     dispatch(addToCart(cartItem));
     dispatch(getTotals());
   };

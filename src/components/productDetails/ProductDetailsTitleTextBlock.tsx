@@ -32,7 +32,7 @@ const ProductDetailsTitleTextBlock = ({
   const handleCart = (product: TDress) => {
     const { _id, image, title, price } = product;
     const cartItem = { _id, img: image.front, title, price, qty: count };
-    // console.log(cartItem);
+
     dispatch(addToCart(cartItem));
     dispatch(getTotals());
   };

@@ -2,7 +2,7 @@
 import { TDress } from "@/types/dress.types";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+
 import { addToCart, getTotals } from "@/redux/slices/cartSlice";
 import { MdAddShoppingCart } from "react-icons/md";
 import { useAppDispatch } from "@/redux/hook";
@@ -16,7 +16,7 @@ const TrendingProductCard = ({ product }: { product: TDress }) => {
   const handleCart = (product: TDress) => {
     const { _id, image, title, price } = product;
     const cartItem = { _id, img: image.front, title, price, qty: 1 };
-    // console.log(cartItem);
+
     dispatch(addToCart(cartItem));
     dispatch(getTotals());
   };

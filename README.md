@@ -26,9 +26,9 @@ This web application is fully responsive.
 - Express JS as server.
 - MongoDB as database.
 
-Live URL: `https://identity-client2-iota.vercel.app/`
+Live URL: `https://identity-client-final.vercel.app/`
 
-Live server: `https://indentity-server.vercel.app/`
+Live server: `https://indentity-server-final.vercel.app/`
 
 ========================================================
 
@@ -42,7 +42,7 @@ Make sure you have Git installed on your machine.
 
 Open a terminal and navigate to the directory where you want to clone the project. Run the following command.
 
-`git clone https://github.com/AM-Raju/identity-client2`
+`git clone https://identity-client-final.vercel.app/`
 
 #### Navigate to Project Directory:
 

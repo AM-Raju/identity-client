@@ -2,10 +2,9 @@
 import { useCreateOrderMutation } from "@/redux/api/orderApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { clearCart, getTotals } from "@/redux/slices/cartSlice";
-import { addOrder, setAddress } from "@/redux/slices/oderSlice";
+import { addOrder, clearOrder, setAddress } from "@/redux/slices/oderSlice";
 import { RootState } from "@/redux/store";
-import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { toast } from "sonner";
 
 const OrderSummary = () => {
@@ -31,26 +30,26 @@ const OrderSummary = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
     dispatch(getTotals());
+    dispatch(clearOrder());
   };
 
-  const setAddressToState = () => {
+  useEffect(() => {
     if (user?.address) {
       dispatch(setAddress(user?.address));
     }
-  };
+    dispatch(addOrder(orderDetails));
+  }, []);
 
   const handleOrder = async () => {
-    if (!order?.address && !user?.address) {
-      toast.error("Save Address first");
+    const toastId = "handleOrder";
+    if (!user?.address) {
+      toast.error("Save Address first", { id: toastId });
     } else {
-      setAddressToState();
-      dispatch(addOrder(orderDetails));
       if (order?.orderedBy) {
         const res: any = await createOrder(order);
         if (res?.data?.insertedId) {
-          dispatch(clearCart());
-          dispatch(getTotals());
-          toast.success("Order added successfully!");
+          handleClearCart();
+          toast.success("Order added successfully!", { id: toastId });
         }
       }
     }

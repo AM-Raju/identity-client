@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home | Dashboard - Identity",
+  description: "Be the real you",
+};
 const DBPage = () => {
   return (
     <div>

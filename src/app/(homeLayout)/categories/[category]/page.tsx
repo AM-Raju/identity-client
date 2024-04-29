@@ -1,6 +1,7 @@
 import ProductCard from "@/components/cards/ProductCard";
 import Container from "@/components/shared/Container";
 import { TDress } from "@/types/dress.types";
+import { Metadata } from "next";
 import Image from "next/image";
 
 type TCategoryPageProps = {
@@ -8,6 +9,21 @@ type TCategoryPageProps = {
     category: string;
   };
 };
+
+type Props = {
+  params: { category: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const res = await fetch(
+    `${process.env.BACKEND_URL}/dresses/${params.category}`
+  );
+  const dressCategory = await res.json();
+
+  return {
+    title: `${dressCategory[0]?.name} | Identity`,
+  };
+}
 
 const CategoryPage = async ({ params }: TCategoryPageProps) => {
   const res = await fetch(

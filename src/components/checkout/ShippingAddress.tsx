@@ -7,7 +7,6 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 const ShippingAddress = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
-  // console.log(user);
 
   const {
     register,
@@ -16,7 +15,6 @@ const ShippingAddress = () => {
     formState: { errors },
   } = useForm<FieldValues>();
   const handleShippingAddress: SubmitHandler<FieldValues> = (data) => {
-    // console.log("Shipping Address", data);
     dispatch(setAddress(data));
     reset();
   };

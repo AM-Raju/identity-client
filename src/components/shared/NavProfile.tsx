@@ -1,29 +1,27 @@
 "use client";
-import { authKey } from "@/constant/constant";
+
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { getUserInfo, isLoggedIn, removeUser } from "@/services/auth.service";
-import { removeFromLocalStorage } from "@/utils/localStorage";
+import { clearUser } from "@/redux/slices/userSlice";
+import { removeUser } from "@/services/auth.service";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaRegUser } from "react-icons/fa";
 
 const NavProfile = () => {
   const cart = useAppSelector((state) => state.cart);
+  const { user } = useAppSelector((state) => state.user);
+
   const dispatch = useAppDispatch();
 
   const router = useRouter();
   const pathName = usePathname();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    setUser(getUserInfo());
-  }, [cart, dispatch]);
 
   const handleLogout = () => {
     removeUser();
+    dispatch(clearUser());
     router.refresh();
     router.push("/");
   };
@@ -35,10 +33,9 @@ const NavProfile = () => {
           <div className="indicator">
             <AiOutlineShoppingCart className="text-secondary size-7" />
 
-            <div className="bg-white flex items-center justify-center h-5 min-w-5  rounded-full  relative -left-2 -top-2 p-1">
+            <div className="bg-white flex items-center justify-center h-5 min-w-5  rounded-full border border-secondary relative -left-2 -top-2 p-1">
               <p className="px-0.5 text-xs">{cart?.cartTotalQuantity}</p>
             </div>
-            {/* <p className="badge badge-sm indicator-item">8</p> */}
           </div>
         </div>
         <div
@@ -53,8 +50,17 @@ const NavProfile = () => {
               Subtotal: ${cart?.cartTotalAmount}
             </span>
             <Link href="/checkout">
-              <div className="w-full py-3 rounded-lg border border-secondary bg-secondary hover:bg-amber-500 transition-all duration-300 flex justify-center">
-                <button>View cart</button>
+              <div className="w-full  flex justify-center">
+                <button
+                  className={`py-3 w-full rounded-lg border   transition-all duration-300 ${
+                    cart.cartItems.length < 1
+                      ? "bg-gray-300"
+                      : "bg-secondary hover:bg-amber-500 border-secondary"
+                  }`}
+                  disabled={cart.cartItems.length < 1 ? true : false}
+                >
+                  View cart
+                </button>
               </div>
             </Link>
           </div>
@@ -67,17 +73,17 @@ const NavProfile = () => {
           className="btn btn-ghost btn-circle avatar"
         >
           <div className="size-9 rounded-full border-2 border-secondary">
-            {user ? (
+            {user?.image ? (
               <Image
                 className="scale-125 rounded-full"
                 alt="Profile image"
-                src="https://i.ibb.co/g7ScGKX/testimonial-img-1.png"
+                src={user?.image}
                 width="200"
                 height="200"
               />
             ) : (
               <div className="size-8 flex justify-center items-center">
-                <FaRegUser className="text-white text-2xl" />
+                <FaRegUser className="text-secondary text-2xl p-0.5" />
               </div>
             )}
           </div>

@@ -1,10 +1,14 @@
-"use client";
 import PaymentMethodCard from "@/components/checkout/PaymentMethodCard";
 import ShippingAddress from "@/components/checkout/ShippingAddress";
 import Container from "@/components/shared/Container";
-import { getUserDetails } from "@/services/auth.service";
+import { Metadata } from "next";
+
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+
+export const metadata: Metadata = {
+  title: "Checkout | Identity",
+  description: "Be the real you",
+};
 
 const CheckoutPage = () => {
   const CheckoutItems = dynamic(

@@ -3,6 +3,7 @@ import Sidebar from "@/components/dashboard/dBShared/Sidebar";
 import Logo from "@/components/shared/Logo";
 import NavProfile from "@/components/shared/NavProfile";
 import { isLoggedIn } from "@/services/auth.service";
+import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 

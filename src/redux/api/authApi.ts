@@ -10,6 +10,7 @@ const authApi = baseApi.injectEndpoints({
           body: body,
         };
       },
+      invalidatesTags: ["auth"],
     }),
     loginUser: build.mutation({
       query: (body) => {
@@ -19,6 +20,7 @@ const authApi = baseApi.injectEndpoints({
           body: body,
         };
       },
+      invalidatesTags: ["auth"],
     }),
 
     getUser: build.query({
@@ -30,6 +32,7 @@ const authApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: ["auth"],
     }),
   }),
 });

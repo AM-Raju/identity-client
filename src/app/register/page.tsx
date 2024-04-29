@@ -92,7 +92,7 @@ const RegisterPage = () => {
             )}
             <div className="w-full pt-5">
               <button
-                className=" w-full hover:bg-primary hover:text-white transition-all duration-500 px-3 py-3 border font-poppins text-white border-white hover:border-primary"
+                className=" w-full hover:bg-secondary hover:text-primary transition-all duration-500 px-3 py-3 border font-poppins text-white border-white hover:border-secondary"
                 type="submit"
               >
                 Register

@@ -1,4 +1,10 @@
 import AllFlashProducts from "@/components/flash-sale/AllFlashProducts";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Flash Sale | Identity",
+  description: "Be the real you",
+};
 
 const FlashSalePage = async () => {
   const res = await fetch(`${process.env.BACKEND_URL}/flash-products`, {

@@ -1,6 +1,5 @@
 import { TOrder } from "@/types/order.types";
 import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "sonner";
 
 type TOrderState = {
   order: TOrder | Record<string, any>;
@@ -20,9 +19,12 @@ const orderSlice = createSlice({
     addOrder: (state, action) => {
       state.order = { ...state.order, ...action.payload };
     },
+    clearOrder: (state) => {
+      state.order = {};
+    },
   },
 });
 
-export const { setAddress, addOrder } = orderSlice.actions;
+export const { setAddress, addOrder, clearOrder } = orderSlice.actions;
 
 export default orderSlice.reducer;

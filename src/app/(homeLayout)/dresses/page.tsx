@@ -3,6 +3,12 @@ import CategoryDropDown from "@/components/products/CategoryDropDown";
 import PriceRange from "@/components/products/PriceRange";
 import SortByRating from "@/components/products/SortByRating";
 import Container from "@/components/shared/Container";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "All Dresses | Identity",
+  description: "Be the real you",
+};
 
 const AllProductsPage = async () => {
   const res = await fetch(`${process.env.BACKEND_URL}/all-products`, {

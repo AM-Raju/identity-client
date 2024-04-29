@@ -16,18 +16,15 @@ const LoginPage = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    // console.log("From login", data);
     try {
       const res = await loginUser(data).unwrap();
-      // console.log("login page", res);
-      // console.log(res?.accessToken);
 
       if (res?.success) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.accessToken });
 
         const user = await getUserDetails();
-        console.log(user);
+
         dispatch(setUser(user));
         reset();
         router.push("/dashboard");
@@ -64,7 +61,7 @@ const LoginPage = () => {
 
             <div className="w-full pt-5">
               <button
-                className=" w-full hover:bg-primary hover:text-white transition-all duration-500 px-3 py-3 border font-poppins text-white border-white hover:border-primary"
+                className=" w-full hover:bg-secondary hover:text-primary transition-all duration-500 px-3 py-3 border font-poppins text-white border-white hover:border-secondary"
                 type="submit"
               >
                 Login

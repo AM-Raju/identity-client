@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Home | Identity",
   description: "Be the real you",
+  // icons: "@/app/home.ico",
 };
 
 export default function RootLayout({

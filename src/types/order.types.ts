@@ -7,6 +7,7 @@ type TOrderInfo = {
 };
 
 export type TOrder = {
+  _id: string;
   orderedBy: string;
   orderInfo: TOrderInfo;
   payableAmount: number;

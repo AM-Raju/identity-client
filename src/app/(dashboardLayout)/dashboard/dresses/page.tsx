@@ -1,4 +1,10 @@
 import AllProductsTable from "@/components/dashboard/dBAllProducts/AllProductsTable";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "All Dresses | Dashboard-Identity",
+  description: "Be the real you",
+};
 
 const AllProductsPage = async () => {
   const res = await fetch(`${process.env.BACKEND_URL}/all-products`, {

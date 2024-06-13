@@ -1,13 +1,14 @@
 import { TDress } from "@/types/dress.types";
 import FlashSaleCard from "../cards/FlashSaleCard";
 import Container from "../shared/Container";
-import Timer from "../shared/Timer";
+// import Timer from "../shared/Timer";
 
 const AllFlashProducts = ({ products }: { products: TDress[] }) => {
   const totalProducts = products.length;
 
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 1295999);
+  /* Removed for now */
+  /*   const time = new Date();
+  time.setSeconds(time.getSeconds() + 1295999); */
 
   return (
     <Container>
@@ -25,7 +26,8 @@ const AllFlashProducts = ({ products }: { products: TDress[] }) => {
               Possimus, doloribus?
             </p>
           </div>
-          <Timer expiryTimestamp={time}></Timer>
+          {/* Removed for now */}
+          {/* <Timer expiryTimestamp={time}></Timer> */}
         </div>
 
         <div className="mx-auto max-sm:w-72 md:max-xl:max-w-4xl  grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-10">

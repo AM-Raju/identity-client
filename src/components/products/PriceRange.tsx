@@ -8,9 +8,7 @@ const priceRangeFn = (rangeArr: string[]) => {
     arr1.push(...range.split("-"));
   }
 
-  console.log(arr1);
   const arr2 = arr1.sort((a, b) => Number(a) - Number(b));
-  console.log(arr2);
 
   return {
     startPrice: Number(arr2[0]),

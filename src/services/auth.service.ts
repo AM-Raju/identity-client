@@ -36,15 +36,12 @@ export const removeUser = () => {
 
 export const getUserDetails = async () => {
   const { email } = getUserInfo();
-  const res = await fetch(
-    `https://indentity-server-final.vercel.app/api/v1/users/${email}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const res = await fetch(`http://localhost:5000/api/v1/users/${email}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   const userDetails = await res.json();
 

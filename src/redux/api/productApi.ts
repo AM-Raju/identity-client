@@ -11,17 +11,17 @@ const productApi = baseApi.injectEndpoints({
           body: order,
         };
       },
-      //   invalidatesTags: ["order"],
+      //   invalidatesTags: ["product"],
     }), */
 
     getProducts: build.query({
       query: () => {
         return {
-          url: "orders",
+          url: "all-products",
           method: "GET",
         };
       },
-      //   providesTags: ["order"],
+      providesTags: ["product"],
     }),
 
     /*     myOrders: build.query({
@@ -31,7 +31,7 @@ const productApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      //   providesTags: ["order"],
+      //   providesTags: ["product"],
     }), */
   }),
 });

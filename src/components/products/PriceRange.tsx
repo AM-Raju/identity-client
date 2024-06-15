@@ -1,22 +1,18 @@
 "use client";
+import { useGetProductsQuery } from "@/redux/api/productApi";
+import { priceRangeFn, rangeArrFn } from "@/utils/utils";
 import { ChangeEvent, useState } from "react";
 
-const priceRangeFn = (rangeArr: string[]) => {
-  let arr1 = [];
-
-  for (let range of rangeArr) {
-    arr1.push(...range.split("-"));
+const PriceRange = () => {
+  const { data, isLoading } = useGetProductsQuery("");
+  // console.log(data);
+  let rangeArr;
+  if (!isLoading) {
+    rangeArr = rangeArrFn(data);
   }
 
-  const arr2 = arr1.sort((a, b) => Number(a) - Number(b));
+  console.log(rangeArr);
 
-  return {
-    startPrice: Number(arr2[0]),
-    endPrice: Number(arr2[arr2.length - 1]),
-  };
-};
-
-const PriceRange = () => {
   const [selectedRanges, setSelectedRanges] = useState<string[]>([]);
 
   // ["00-50", "51-100", "101-150", "151-200"];
@@ -25,11 +21,9 @@ const PriceRange = () => {
     priceRange = priceRangeFn(selectedRanges);
   }
 
-  console.log("Price range", priceRange);
+  console.log(priceRange); // Now set it to the state and start filter operation
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log("Event", event);
-
     const { name, checked } = event.target;
 
     if (checked) {
@@ -42,17 +36,21 @@ const PriceRange = () => {
     <div className=" border border-secondary px-8 py-10">
       <h1 className="border-l-4 pl-3 border-coal-black text-xl">Price range</h1>
       <div className="mt-6 space-y-4 ">
-        <div className="flex items-center gap-5 ">
-          <input
-            className=" focus:ring-0 focus:ring-offset-0  size-5"
-            type="checkbox"
-            name="00-50"
-            id="00-50"
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="">$00 - $50</label>
-        </div>
-        <div className="flex items-center gap-5">
+        {rangeArr?.map((range, index) => (
+          <div key={index} className="flex items-center gap-5 ">
+            <input
+              className=" focus:ring-0 focus:ring-offset-0  size-5"
+              type="checkbox"
+              name={`${range[0] === 0 ? "00" : range[0]} - ${range[1]}`}
+              id={`${range[0] === 0 ? "00" : range[0]} - ${range[1]}`}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="">
+              ${range[0] === 0 ? "00" : range[0]} - ${range[1]}
+            </label>
+          </div>
+        ))}
+        {/*    <div className="flex items-center gap-5">
           <input
             className=" focus:ring-0 focus:ring-offset-0  size-5"
             type="checkbox"
@@ -81,7 +79,7 @@ const PriceRange = () => {
             onChange={handleCheckboxChange}
           />
           <label htmlFor="">$151 - $200</label>
-        </div>
+        </div> */}
       </div>
     </div>
   );
